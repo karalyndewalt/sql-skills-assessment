@@ -283,6 +283,32 @@ ON b.name = m.brand_name;
 
 
 ==========
+12
+
+-----
+
+Modify the query so that it only selects brands that do NOT have any
+models in the models table.
+
+The correct result set is:
+
+ name  | founded
+-------+---------
+ Tesla |    2003
+(1 rows)
+
+-----
+
+
+SELECT b.name,
+founded
+FROM brands AS b
+LEFT JOIN models AS m
+ON b.name = m.brand_name
+WHERE m.ID IS NULL;
+
+
+==========
 14
 
 -----

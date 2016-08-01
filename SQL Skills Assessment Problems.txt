@@ -1,47 +1,3 @@
-Problem 12
-----------
-
-Currently, the query below returns all brands who have models 
-after the year 1940.
-
-  SELECT b.name,
-         founded
-  FROM brands AS b
-    LEFT JOIN models AS m
-      ON b.name = m.brand_name
-  WHERE models.year > 1940;
-
-Task: Modify the query so that it only selects brands that do NOT have any
-models in the models table.
-
-The correct result set is:
-
- name  | founded
--------+---------
- Tesla |    2003
-(1 rows)
-
-
-My answer is: 
-
-SQL [12]>   SELECT b.name,
-... [12]>          founded
-... [12]>   FROM brands AS b
-... [12]>     LEFT JOIN models AS m
-... [12]>       ON b.name = m.brand_name
-... [12]>   WHERE m.year > 1940 AND m.id IS NULL;
-
-But I get: 
-
-(your syntax was legal but your query returned no results)
-
-But I also don't get all brands who have models 
-after the year 1940 if I don't add anything. It errors out on models.year because
-we have asked PSQL to think of models as M. But when I correct models.year to m. year,
-I will get the error message "(your syntax was legal but your query returned no results)".
-
-
-
 Question 13 
 
 
@@ -91,17 +47,17 @@ result set is:
 
 My answer: 
 
-SQL [13]>   SELECT b.name,
-... [13]>          m.name,
-... [13]>          m.year,
-... [13]>          b.discontinued,
-... [13]>       b.discontinued-m.year AS years_until_brand_discontinued
-... [13]>   FROM models AS m
-... [13]>     LEFT JOIN brands AS b
-... [13]>       ON m.brand_name = b.name
-... [13]>   WHERE b.discontinued IS NOT NULL
-... [13]>   ORDER BY b.name, m.name, m.year;
+SELECT b.name,
+m.name,
+m.year,
+b.discontinued,
+b.discontinued-m.year AS years_until_brand_discontinued
+FROM models AS m
+LEFT JOIN brands AS b
+ON m.brand_name = b.name
+WHERE b.discontinued IS NOT NULL
+ORDER BY b.name, m.name, m.year;
 
-But I get an error because your example is has the Pontiacs out of alphabetical
-order. (I think?)
+But I get an error (I think) because your example (doctest) has the Pontiacs GTO out of alphabetical
+order.
 
